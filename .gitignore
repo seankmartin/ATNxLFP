@@ -1,0 +1,5 @@
+*.pyc
+.vscode/
+*.db
+sim_results/
+saved/
