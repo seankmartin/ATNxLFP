@@ -19,7 +19,7 @@ def setup_functions():
     # The list of functions to run, in order
     # Each function should take as its first argument a recording object
     # This should be an actual function, as opposed to a string name
-    import simuran.analysis.custom.lfp_difference as diff
+    import lfp_difference as diff
 
     functions = [diff.compare_lfp, (diff.average_difference, None)]
 

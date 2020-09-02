@@ -9,7 +9,7 @@ def setup_functions():
 
     # The list of functions to run, in order
     # Each function should take as its first argument a recording object
-    import simuran.analysis.custom.plot_lfp_eg as eg
+    import plot_lfp_eg as eg
 
     functions = [eg.main]
 
