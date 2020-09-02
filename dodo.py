@@ -1,5 +1,6 @@
 # For use with Python doit.
 import os
+from doit.tools import title_with_actions
 
 
 def task_coherence():
@@ -29,4 +30,6 @@ def task_coherence():
             )
         ],
         "clean": True,
+        "title": title_with_actions,
+        "verbosity": 0
     }

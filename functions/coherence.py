@@ -10,7 +10,7 @@ def setup_functions():
     # The list of functions to run, in order
     # Each function should take as its first argument a recording object
     # This should be an actual function, as opposed to a string name
-    from simuran.analysis.custom.plot_coherence import plot_recording_coherence
+    from plot_coherence import plot_recording_coherence
 
     functions = [plot_recording_coherence]
 
