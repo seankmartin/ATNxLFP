@@ -40,6 +40,6 @@ from simuran.main.doit import create_task
 def task_coherence():
     return create_task(
         os.path.join("multi_runs", "coherence_atnx.py"),
-        "plot_coherence.py",
+        ["plot_coherence.py"],
         num_workers=4,
     )
