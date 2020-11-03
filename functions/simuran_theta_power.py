@@ -76,7 +76,7 @@ def setup_output():
     """Establish what results of the functions will be saved."""
 
     # This should list the results to save to a csv
-    save_list = [("results", "powers_0")]
+    save_list = [("results", "powers")]
 
     # You can name each of these outputs
     output_names = []
