@@ -62,7 +62,7 @@ def plot_all_spectrum(info, out_dir, name):
         y="power",
         style="group",
         hue="region",
-        ci=95,
+        ci=None,
         estimator="mean",
     )
     sns.despine()
