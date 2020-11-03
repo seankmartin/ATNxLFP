@@ -4,6 +4,78 @@ def do_fig(info, extra_info):
     plot_all_lfp(data, out_dir, name)
 
 
+def do_spectrum(info, extra_info):
+    data, fnames = info
+    out_dir, name = extra_info
+    plot_all_spectrum(info, out_dir, name)
+
+
+def plot_all_spectrum(info, out_dir, name):
+    import os
+
+    import numpy as np
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    from neurochat.nc_utils import smooth_1d
+
+    # TODO solve this problem
+    base_dir = r"D:\SubRet_recordings_imaging"
+    os.makedirs(out_dir, exist_ok=True)
+
+    sns.set_style("ticks")
+    sns.set_palette("colorblind")
+
+    parsed_info = []
+    data, fnames = info
+    for item_list, fname_list in zip(data, fnames):
+        for item_dict, fname in zip(item_list, fname_list):
+            start_bit = fname[len(base_dir) + 1]
+            if start_bit.lower() == "c":
+                data_set = "Control"
+            else:
+                data_set = "Lesion"
+            # print(fname, start_bit, data_set)
+            for r in ["sub", "rsc"]:
+                freqs = item_dict[r + " welch"][0].astype(float)
+                powers = smooth_1d(
+                    item_dict[r + " welch"][1].astype(float),
+                    kernel_type="hg",
+                    kernel_size=5,
+                )
+                for f, p in zip(freqs, powers):
+                    parsed_info.append((f, p, data_set, r))
+
+    data = np.array(parsed_info)
+    print(data)
+    df = pd.DataFrame(data, columns=["frequency", "power", "group", "region"])
+    df.replace("Control", "Control (ATN,   N = 6)", inplace=True)
+    df.replace("Lesion", "Lesion  (ATNx, N = 5)", inplace=True)
+    df[["frequency", "power"]] = df[["frequency", "power"]].apply(pd.to_numeric)
+
+    sns.set_style("ticks")
+    sns.set_palette("colorblind")
+    sns.lineplot(
+        data=df,
+        x="frequency",
+        y="power",
+        style="group",
+        hue="region",
+        ci=95,
+        estimator="mean",
+    )
+    sns.despine()
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Power (uV^2 / Hz)")
+
+    print("Saving plots to {}".format(out_dir))
+
+    plt.savefig(os.path.join(out_dir, name + "--power.png"), dpi=400)
+
+    plt.close("all")
+
+
 def plot_all_lfp(info, out_dir, name):
     import os
 

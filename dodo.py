@@ -25,3 +25,10 @@ def task_lfp_difference():
         ["lfp_difference.py"],
         num_workers=4,
     )
+
+def task_theta_power():
+	return create_task(
+		os.path.join("multi_runs", "spectral_atnx.py"),
+		["simuran_theta_power.py"],
+		num_workers=4,
+	)
