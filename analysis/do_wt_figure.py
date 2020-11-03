@@ -57,12 +57,12 @@ def plot_all_spectrum(info, out_dir, name):
     sns.set_style("ticks")
     sns.set_palette("colorblind")
     sns.lineplot(
-        data=df,
+        data=df[df["region"] == "sub"],
         x="frequency",
         y="power",
         style="group",
-        hue="region",
-        ci=None,
+        hue="group",
+        ci=95,
         estimator="mean",
     )
     sns.despine()
@@ -71,9 +71,26 @@ def plot_all_spectrum(info, out_dir, name):
 
     print("Saving plots to {}".format(out_dir))
 
-    plt.savefig(os.path.join(out_dir, name + "--power.png"), dpi=400)
+    plt.savefig(os.path.join(out_dir, name + "--sub--power.png"), dpi=400)
 
     plt.close("all")
+
+    sns.lineplot(
+        data=df[df["region"] == "rsc"],
+        x="frequency",
+        y="power",
+        style="group",
+        hue="group",
+        ci=95,
+        estimator="mean",
+    )
+    sns.despine()
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Power (uV^2 / Hz)")
+
+    print("Saving plots to {}".format(out_dir))
+
+    plt.savefig(os.path.join(out_dir, name + "--rsc--power.png"), dpi=400)
 
 
 def plot_all_lfp(info, out_dir, name):
