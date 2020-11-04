@@ -52,44 +52,53 @@ def plot_all_spectrum(info, out_dir, name):
     df.replace("Lesion", "Lesion  (ATNx, N = 5)", inplace=True)
     df[["frequency", "power"]] = df[["frequency", "power"]].apply(pd.to_numeric)
 
-    sns.set_style("ticks")
-    sns.set_palette("colorblind")
-    sns.lineplot(
-        data=df[df["region"] == "sub"],
-        x="frequency",
-        y="power",
-        style="group",
-        hue="group",
-        ci=95,
-        estimator="mean",
-    )
-    sns.despine()
-    plt.xlabel("Frequency (Hz)")
-    plt.ylabel("Power (uV^2 / Hz)")
+    for ci, oname in zip([95, None], ["_ci", ""]):
+        sns.set_style("ticks")
+        sns.set_palette("colorblind")
+        sns.lineplot(
+            data=df[df["region"] == "sub"],
+            x="frequency",
+            y="power",
+            style="group",
+            hue="group",
+            ci=ci,
+            estimator="mean",
+        )
+        sns.despine()
+        plt.xlabel("Frequency (Hz)")
+        plt.ylabel("Power (uV^2 / Hz)")
 
-    print("Saving plots to {}".format(out_dir))
+        print("Saving plots to {}".format(out_dir))
 
-    os.makedirs(os.path.join(out_dir, "summary"), exist_ok=True)
-    plt.savefig(os.path.join(out_dir, "summary", name + "--sub--power.png"), dpi=400)
+        os.makedirs(os.path.join(out_dir, "summary"), exist_ok=True)
+        plt.savefig(
+            os.path.join(out_dir, "summary", name + "--sub--power{}.png".format(oname)),
+            dpi=400,
+        )
 
-    plt.close("all")
+        plt.close("all")
 
-    sns.lineplot(
-        data=df[df["region"] == "rsc"],
-        x="frequency",
-        y="power",
-        style="group",
-        hue="group",
-        ci=95,
-        estimator="mean",
-    )
-    sns.despine()
-    plt.xlabel("Frequency (Hz)")
-    plt.ylabel("Power (uV^2 / Hz)")
+        sns.lineplot(
+            data=df[df["region"] == "rsc"],
+            x="frequency",
+            y="power",
+            style="group",
+            hue="group",
+            ci=ci,
+            estimator="mean",
+        )
+        sns.despine()
+        plt.xlabel("Frequency (Hz)")
+        plt.ylabel("Power (uV^2 / Hz)")
 
-    print("Saving plots to {}".format(out_dir))
+        print("Saving plots to {}".format(out_dir))
 
-    plt.savefig(os.path.join(out_dir, "summary", name + "--rsc--power.png"), dpi=400)
+        plt.savefig(
+            os.path.join(out_dir, "summary", name + "--rsc--power{}.png".format(oname)),
+            dpi=400,
+        )
+
+        plt.close("all")
 
 
 def plot_all_lfp(info, out_dir, name):
@@ -140,7 +149,7 @@ def plot_all_lfp(info, out_dir, name):
     df[["frequency", "coherence"]] = df[["frequency", "coherence"]].apply(pd.to_numeric)
 
     sns.lineplot(
-        data=df, x="frequency", y="coherence", style="Group", hue="Group", ci=None
+        data=df, x="frequency", y="coherence", style="Group", hue="Group", ci=95
     )
 
     sns.despine()
@@ -150,6 +159,19 @@ def plot_all_lfp(info, out_dir, name):
 
     print("Saving plots to {}".format(out_dir))
     os.makedirs(os.path.join(out_dir, "summary"), exist_ok=True)
+    plt.savefig(os.path.join(out_dir, "summary", name + "--coherence_ci.png"), dpi=400)
+    plt.close("all")
+
+    sns.lineplot(
+        data=df, x="frequency", y="coherence", style="Group", hue="Group", ci=None
+    )
+
+    sns.despine()
+
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Coherence")
+
+    print("Saving plots to {}".format(out_dir))
     plt.savefig(os.path.join(out_dir, "summary", name + "--coherence.png"), dpi=400)
 
     plt.ylim(0, 1)
@@ -157,7 +179,6 @@ def plot_all_lfp(info, out_dir, name):
     plt.savefig(
         os.path.join(out_dir, "summary", name + "--coherence_full.png"), dpi=400
     )
-
     plt.close("all")
 
     sns.set_style("ticks")
@@ -172,3 +193,4 @@ def plot_all_lfp(info, out_dir, name):
 
     print("Saving to {}".format((os.path.join(out_dir, name + "--difference.pdf"))))
     plt.savefig(os.path.join(out_dir, "summary", name + "--difference.pdf"), dpi=400)
+    plt.close("all")
