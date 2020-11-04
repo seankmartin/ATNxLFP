@@ -69,8 +69,8 @@ def plot_all_spectrum(info, out_dir, name):
 
     print("Saving plots to {}".format(out_dir))
 
-    os.makedirs(os.path.join(out_dir, "power_summary"), exist_ok=True)
-    plt.savefig(os.path.join(out_dir, "power_summary", name + "--sub--power.png"), dpi=400)
+    os.makedirs(os.path.join(out_dir, "summary"), exist_ok=True)
+    plt.savefig(os.path.join(out_dir, "summary", name + "--sub--power.png"), dpi=400)
 
     plt.close("all")
 
@@ -89,7 +89,7 @@ def plot_all_spectrum(info, out_dir, name):
 
     print("Saving plots to {}".format(out_dir))
 
-    plt.savefig(os.path.join(out_dir, "power_summary", name + "--rsc--power.png"), dpi=400)
+    plt.savefig(os.path.join(out_dir, "summary", name + "--rsc--power.png"), dpi=400)
 
 
 def plot_all_lfp(info, out_dir, name):
@@ -149,11 +149,14 @@ def plot_all_lfp(info, out_dir, name):
     plt.ylabel("Coherence")
 
     print("Saving plots to {}".format(out_dir))
-    plt.savefig(os.path.join(out_dir, name + "--coherence.png"), dpi=400)
+    os.makedirs(os.path.join(out_dir, "summary"), exist_ok=True)
+    plt.savefig(os.path.join(out_dir, "summary", name + "--coherence.png"), dpi=400)
 
     plt.ylim(0, 1)
 
-    plt.savefig(os.path.join(out_dir, name + "--coherence_full.png"), dpi=400)
+    plt.savefig(
+        os.path.join(out_dir, "summary", name + "--coherence_full.png"), dpi=400
+    )
 
     plt.close("all")
 
@@ -168,4 +171,4 @@ def plot_all_lfp(info, out_dir, name):
     plt.ylabel("Difference")
 
     print("Saving to {}".format((os.path.join(out_dir, name + "--difference.pdf"))))
-    plt.savefig(os.path.join(out_dir, name + "--difference.pdf"), dpi=400)
+    plt.savefig(os.path.join(out_dir, "summary", name + "--difference.pdf"), dpi=400)
