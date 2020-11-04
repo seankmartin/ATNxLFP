@@ -15,7 +15,9 @@ def task_coherence():
 
 def task_lfp_plot():
     return create_task(
-        os.path.join("multi_runs", "lfp_plot.py"), ["plot_lfp_eg.py"], num_workers=4,
+        os.path.join("multi_runs", "lfp_plot.py"),
+        ["plot_lfp_eg.py"],
+        num_workers=4,
     )
 
 
@@ -26,9 +28,10 @@ def task_lfp_difference():
         num_workers=4,
     )
 
+
 def task_theta_power():
-	return create_task(
-		os.path.join("multi_runs", "spectral_atnx.py"),
-		["simuran_theta_power.py"],
-		num_workers=4,
-	)
+    return create_task(
+        os.path.join("multi_runs", "spectral_atnx.py"),
+        ["simuran_theta_power.py"],
+        num_workers=4,
+    )

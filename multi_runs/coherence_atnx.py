@@ -41,7 +41,7 @@ def set_file_locations():
                 os.path.join(
                     "__dirname__", "..", "batch_params", "CSR{}-openfield.py"
                 ).format(val),
-                os.path.join("__dirname__", "..", "functions", "coherence.py"),
+                os.path.join("__dirname__", "..", "functions", "avg_coherence.py"),
                 "CSR{}".format(val),
             )
         )
@@ -52,7 +52,7 @@ def set_file_locations():
                 os.path.join(
                     "__dirname__", "..", "batch_params", "LSR{}-openfield.py"
                 ).format(val),
-                os.path.join("__dirname__", "..", "functions", "coherence.py"),
+                os.path.join("__dirname__", "..", "functions", "avg_coherence.py"),
                 "LSR{}".format(val),
             )
         )
@@ -74,6 +74,9 @@ def set_fixed_params(in_dict):
     # For example, this could be used to concatenate
     # EEG signals that were recorded in two second long trials
     in_dict["keep_all_data"] = False
+
+    # What folders to merge
+    in_dict["to_merge"] = ["avg_coherence"]
     return in_dict
 
 

@@ -9,7 +9,7 @@ def setup_functions():
 
     # The list of functions to run, in order
     # Each function should take as its first argument a recording object
-    from frequency_analysis import powers 
+    from frequency_analysis import powers
 
     functions = [powers]
 
