@@ -9,9 +9,9 @@ def setup_functions():
 
     # The list of functions to run, in order
     # Each function should take as its first argument a recording object
-    import simuran.analysis.custom.frequency_analysis as fa
+    from frequency_analysis import powers 
 
-    functions = [fa.powers]
+    functions = [powers]
 
     def argument_handler(recording_container, idx, figures):
         """
