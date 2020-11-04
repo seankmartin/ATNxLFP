@@ -95,8 +95,6 @@ def plot_recording_coherence(recording, figures, base_dir, sig_type="first"):
         rsc_signal = sig_avg(rsc_signals, 0, _filter)
 
     elif sig_type == "avg":
-        # TODO make sure this average is right
-
         # Remove dead channels
         sub_signals = [s for s in sub_signals if not np.all((s.samples == 0))]
         rsc_signals = [s for s in rsc_signals if not np.all((s.samples == 0))]

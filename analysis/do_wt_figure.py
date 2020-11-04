@@ -20,8 +20,8 @@ def plot_all_spectrum(info, out_dir, name):
 
     from neurochat.nc_utils import smooth_1d
 
-    # TODO solve this problem
-    base_dir = r"D:\SubRet_recordings_imaging"
+    here = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.abspath(os.path.join(here, "..", ".."))
     os.makedirs(out_dir, exist_ok=True)
 
     sns.set_style("ticks")
@@ -36,7 +36,6 @@ def plot_all_spectrum(info, out_dir, name):
                 data_set = "Control"
             else:
                 data_set = "Lesion"
-            # print(fname, start_bit, data_set)
             for r in ["sub", "rsc"]:
                 freqs = item_dict[r + " welch"][0].astype(float)
                 powers = smooth_1d(
@@ -48,7 +47,6 @@ def plot_all_spectrum(info, out_dir, name):
                     parsed_info.append((f, p, data_set, r))
 
     data = np.array(parsed_info)
-    print(data)
     df = pd.DataFrame(data, columns=["frequency", "power", "group", "region"])
     df.replace("Control", "Control (ATN,   N = 6)", inplace=True)
     df.replace("Lesion", "Lesion  (ATNx, N = 5)", inplace=True)
@@ -71,7 +69,8 @@ def plot_all_spectrum(info, out_dir, name):
 
     print("Saving plots to {}".format(out_dir))
 
-    plt.savefig(os.path.join(out_dir, name + "--sub--power.png"), dpi=400)
+    os.makedirs(os.path.join(out_dir, "power_summary"), exist_ok=True)
+    plt.savefig(os.path.join(out_dir, "power_summary", name + "--sub--power.png"), dpi=400)
 
     plt.close("all")
 
@@ -90,7 +89,7 @@ def plot_all_spectrum(info, out_dir, name):
 
     print("Saving plots to {}".format(out_dir))
 
-    plt.savefig(os.path.join(out_dir, name + "--rsc--power.png"), dpi=400)
+    plt.savefig(os.path.join(out_dir, "power_summary", name + "--rsc--power.png"), dpi=400)
 
 
 def plot_all_lfp(info, out_dir, name):

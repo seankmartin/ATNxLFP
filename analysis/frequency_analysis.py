@@ -31,10 +31,7 @@ def powers(recording, **kwargs):
 
         if len(sig_list) > 0:
             window_sec = 2
-            avg_sig = np.zeros(shape=(len(sig_list[0].samples),))
-            for val in sig_list:
-                avg_sig += val.samples / len(sig_list)
-            # This uses the first signal
+            avg_sig = np.mean(np.array([s.samples for s in sig_list]), axis=0)
             sig_in_use = sig_list[0]
             temp = deepcopy(sig_in_use.samples)
             sig_in_use.samples = avg_sig
