@@ -1,3 +1,19 @@
+PALETTE = "dark"
+
+
+def set_p():
+    """Set the seaborn palette."""
+    import seaborn as sns
+
+    sns.set_style("ticks")
+    sns.set_palette(PALETTE)
+    sns.set_context(
+        "paper",
+        font_scale=1.4,
+        rc={"lines.linewidth": 2.0},
+    )
+
+
 def do_fig(info, extra_info):
     data, fnames = info
     out_dir, name = extra_info
@@ -24,8 +40,7 @@ def plot_all_spectrum(info, out_dir, name):
     base_dir = os.path.abspath(os.path.join(here, "..", ".."))
     os.makedirs(out_dir, exist_ok=True)
 
-    sns.set_style("ticks")
-    sns.set_palette("colorblind")
+    set_p()
 
     parsed_info = []
     data, fnames = info
@@ -47,7 +62,7 @@ def plot_all_spectrum(info, out_dir, name):
                     parsed_info.append((f, p, data_set, r))
 
     data = np.array(parsed_info)
-    df = pd.DataFrame(data, columns=["frequency", "power", "group", "region"])
+    df = pd.DataFrame(data, columns=["frequency", "power", "Group", "region"])
     df.replace("Control", "Control (ATN,   N = 6)", inplace=True)
     df.replace("Lesion", "Lesion  (ATNx, N = 5)", inplace=True)
     df[["frequency", "power"]] = df[["frequency", "power"]].apply(pd.to_numeric)
@@ -59,12 +74,12 @@ def plot_all_spectrum(info, out_dir, name):
             data=df[df["region"] == "sub"],
             x="frequency",
             y="power",
-            style="group",
-            hue="group",
+            style="Group",
+            hue="Group",
             ci=ci,
             estimator="mean",
         )
-        sns.despine()
+        sns.despine(offset=0, trim=True)
         plt.xlabel("Frequency (Hz)")
         plt.ylabel("Power (uV^2 / Hz)")
 
@@ -72,7 +87,7 @@ def plot_all_spectrum(info, out_dir, name):
 
         os.makedirs(os.path.join(out_dir, "summary"), exist_ok=True)
         plt.savefig(
-            os.path.join(out_dir, "summary", name + "--sub--power{}.png".format(oname)),
+            os.path.join(out_dir, "summary", name + "--sub--power{}.pdf".format(oname)),
             dpi=400,
         )
 
@@ -82,19 +97,19 @@ def plot_all_spectrum(info, out_dir, name):
             data=df[df["region"] == "rsc"],
             x="frequency",
             y="power",
-            style="group",
-            hue="group",
+            style="Group",
+            hue="Group",
             ci=ci,
             estimator="mean",
         )
-        sns.despine()
+        sns.despine(offset=0, trim=True)
         plt.xlabel("Frequency (Hz)")
         plt.ylabel("Power (uV^2 / Hz)")
 
         print("Saving plots to {}".format(out_dir))
 
         plt.savefig(
-            os.path.join(out_dir, "summary", name + "--rsc--power{}.png".format(oname)),
+            os.path.join(out_dir, "summary", name + "--rsc--power{}.pdf".format(oname)),
             dpi=400,
         )
 
