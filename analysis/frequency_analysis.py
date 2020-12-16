@@ -5,6 +5,19 @@ import numpy as np
 from scipy.signal import welch
 
 
+def detect_outlying_signals(signals):
+    avg_sig = np.mean(np.array([s.samples for s in signals]), axis=0)
+
+    diff = np.zeros(shape=(len(signals), len(signals[0].samples)))
+
+    for i, s in enumerate(signals):
+        diff[i] = np.square(s.samples - avg_sig) / (
+            np.sum(np.square(s.samples) + np.square(avg_sig)) / 2
+        )
+
+    return diff
+
+
 def powers(recording, **kwargs):
     results = {}
 
@@ -30,6 +43,11 @@ def powers(recording, **kwargs):
         results["{} high gamma rel".format(name)] = np.nan
 
         if len(sig_list) > 0:
+            diff = detect_outlying_signals(sig_list)
+            for i in range(len(sig_list)):
+                results["{} {} diff".format(name, sig_list[i].channel)] = np.mean(
+                    diff[i]
+                )
             window_sec = 2
             avg_sig = np.mean(np.array([s.samples for s in sig_list]), axis=0)
             sig_in_use = sig_list[0]

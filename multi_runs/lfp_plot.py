@@ -72,6 +72,8 @@ def set_fixed_params(in_dict):
     # For example, this could be used to concatenate
     # EEG signals that were recorded in two second long trials
     in_dict["keep_all_data"] = False
+
+    in_dict["to_merge"] = ["simuran_plot_lfp"]
     return in_dict
 
 
