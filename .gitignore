@@ -3,3 +3,4 @@
 *.db
 sim_results/
 saved/
+*.db.*
