@@ -8,3 +8,6 @@ simuran -r multi_runs/spectral_atnx.py -m
 ```
 
 The results will be in `sim_results\simuran_theta_power`.
+
+## Reference code from CLA experiment
+See https://github.com/seankmartin/Claustrum_Experiment
