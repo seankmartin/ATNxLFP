@@ -35,16 +35,15 @@ def set_file_locations():
 
     output = []
 
- 
     output.append(
-		(
-			os.path.join(
-				"__dirname__", "..", "batch_params", "CSR{}-openfield.py"
-			).format(val),
-			os.path.join("__dirname__", "..", "functions", "lfp_difference.py"),
-			"_general",
-		)
-	)
+        (
+            os.path.join(
+                "__dirname__", "..", "batch_params", "CSR{}-openfield.py"
+            ).format(val),
+            os.path.join("__dirname__", "..", "functions", "lfp_difference.py"),
+            "_general",
+        )
+    )
     return output
 
 

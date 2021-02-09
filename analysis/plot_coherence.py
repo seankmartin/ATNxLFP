@@ -31,13 +31,7 @@ def plot_coherence(x, y, ax, fs=250, group="ATNx", fmax=100):
 
 
 def plot_psd(x, ax, fs=250, group="ATNx", fmax=100):
-    f, Pxx = welch(
-        x,
-        fs=fs,
-        nperseg=1024,
-        return_onesided=True,
-        scaling="density",
-    )
+    f, Pxx = welch(x, fs=fs, nperseg=1024, return_onesided=True, scaling="density",)
 
     f = f[np.nonzero(f <= fmax)]
     Pxx = Pxx[np.nonzero(f <= fmax)]

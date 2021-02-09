@@ -8,9 +8,7 @@ def set_p():
     sns.set_style("ticks")
     sns.set_palette(PALETTE)
     sns.set_context(
-        "paper",
-        font_scale=1.4,
-        rc={"lines.linewidth": 2.0},
+        "paper", font_scale=1.4, rc={"lines.linewidth": 2.0},
     )
 
 

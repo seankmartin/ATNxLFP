@@ -15,9 +15,7 @@ def task_coherence():
 
 def task_lfp_plot():
     return create_task(
-        os.path.join("multi_runs", "lfp_plot.py"),
-        ["plot_lfp_eg.py"],
-        num_workers=4,
+        os.path.join("multi_runs", "lfp_plot.py"), ["plot_lfp_eg.py"], num_workers=4,
     )
 
 
